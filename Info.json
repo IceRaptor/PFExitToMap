@@ -1,0 +1,9 @@
+{
+  "Id": "ExitToMap",
+  "DisplayName": "Exit To Map",
+  "Author": "zackbleus/IceRaptor",
+  "Version": "1.3.0",
+  "ManagerVersion": "0.12.0",
+  "EntryMethod": "ExitToMap.Main.Load",
+  "Homepage" : "https://github.com/IceRaptor/PFExitToMap"
+}
