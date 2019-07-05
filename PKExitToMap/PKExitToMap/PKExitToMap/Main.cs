@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using Harmony12;
 using Kingmaker.View.MapObjects;
 using System;
 using System.Reflection;
@@ -9,12 +9,22 @@ namespace ExitToMap {
     internal static class Main {
 
         private static bool Load(UnityModManager.ModEntry modEntry) {
-            HarmonyInstance.Create(modEntry.Info.Id).PatchAll(Assembly.GetExecutingAssembly());
+            
             Main.settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
             Main.Logger = modEntry.Logger;
-            modEntry.OnToggle = new Func<UnityModManager.ModEntry, bool, bool>(Main.OnToggle);
-            modEntry.OnGUI = new Action<UnityModManager.ModEntry>(Main.OnGUI);
-            modEntry.OnSaveGUI = new Action<UnityModManager.ModEntry>(Main.OnSaveGUI);
+
+            try {
+                modEntry.OnToggle = new Func<UnityModManager.ModEntry, bool, bool>(Main.OnToggle);
+                modEntry.OnGUI = new Action<UnityModManager.ModEntry>(Main.OnGUI);
+                modEntry.OnSaveGUI = new Action<UnityModManager.ModEntry>(Main.OnSaveGUI);
+
+                HarmonyInstance.Create(modEntry.Info.Id).PatchAll(Assembly.GetExecutingAssembly());
+            } catch (Exception e) {
+                Main.Logger.Critical($"Failed to initialize due to error: {e.Message}");
+                Main.Logger.Log($"Stacktrace is: {e.StackTrace}");
+                Main.Logger.LogException(e);
+            }
+
             return true;
         }
 

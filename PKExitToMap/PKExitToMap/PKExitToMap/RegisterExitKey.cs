@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using Harmony12;
 using Kingmaker.PubSubSystem;
 using Kingmaker.UI;
 using System;
@@ -17,7 +17,7 @@ namespace ExitToMap {
                 Main.settings.ShiftPressed, 
                 false, 
                 0);
-            EventBus.Subscribe(__instance);
+            EventBus.Subscribe(__instance); 
         }
     }
 }

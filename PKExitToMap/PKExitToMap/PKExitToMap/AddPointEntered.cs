@@ -1,14 +1,17 @@
-﻿using Harmony;
+﻿using Harmony12;
 using Kingmaker;
+using Kingmaker.EntitySystem.Entities;
 using Kingmaker.Utility;
 using Kingmaker.View.MapObjects;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 namespace ExitToMap {
 
     [HarmonyPatch(typeof(Game), "OnAreaLoaded")]
-    internal static class AddPointEntered {
+    class AddPointEntered {
 
         public static AreaTransition GetClosestTransition(AreaTransition[] transitions) {
             AreaTransition areaTransition = null;
