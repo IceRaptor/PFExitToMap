@@ -5,21 +5,27 @@ using System.Reflection;
 using UnityEngine;
 using UnityModManagerNet;
 
-namespace ExitToMap {
-    internal static class Main {
+namespace ExitToMap
+{
+    internal static class Main
+    {
 
-        private static bool Load(UnityModManager.ModEntry modEntry) {
-            
+        private static bool Load(UnityModManager.ModEntry modEntry)
+        {
+
             Main.settings = UnityModManager.ModSettings.Load<Settings>(modEntry);
             Main.Logger = modEntry.Logger;
 
-            try {
+            try
+            {
                 modEntry.OnToggle = new Func<UnityModManager.ModEntry, bool, bool>(Main.OnToggle);
                 modEntry.OnGUI = new Action<UnityModManager.ModEntry>(Main.OnGUI);
                 modEntry.OnSaveGUI = new Action<UnityModManager.ModEntry>(Main.OnSaveGUI);
 
                 HarmonyInstance.Create(modEntry.Info.Id).PatchAll(Assembly.GetExecutingAssembly());
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 Main.Logger.Critical($"Failed to initialize due to error: {e.Message}");
                 Main.Logger.Log($"Stacktrace is: {e.StackTrace}");
                 Main.Logger.LogException(e);
@@ -28,12 +34,14 @@ namespace ExitToMap {
             return true;
         }
 
-        private static bool OnToggle(UnityModManager.ModEntry modEntry, bool value) {
+        private static bool OnToggle(UnityModManager.ModEntry modEntry, bool value)
+        {
             Main.enabled = value;
             return true;
         }
 
-        private static void OnGUI(UnityModManager.ModEntry modEntry) {
+        private static void OnGUI(UnityModManager.ModEntry modEntry)
+        {
             GUILayout.BeginHorizontal(Array.Empty<GUILayoutOption>());
             GUILayout.Label("Keybind", new GUILayoutOption[]
             {
@@ -49,7 +57,8 @@ namespace ExitToMap {
             GUILayout.EndHorizontal();
         }
 
-        private static void OnSaveGUI(UnityModManager.ModEntry modEntry) {
+        private static void OnSaveGUI(UnityModManager.ModEntry modEntry)
+        {
             Main.settings.Save(modEntry);
         }
 
